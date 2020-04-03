@@ -11,8 +11,6 @@ Banner, I did it somewhat arbitrarily, potentially 2x what android calls for but
 `xhdpi` : `320x180`
 
 
-### Generated with https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html
-
 ## ic_launcher
 
 Square icon:
