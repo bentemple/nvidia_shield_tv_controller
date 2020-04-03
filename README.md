@@ -11,6 +11,10 @@ If for some reason you become stuck and pressing the netflix button doesn't take
 
 ## Screenshots:
 
+![Home Screen Shortcuts](./screenshots/home_screen_shortcuts.png?raw=true "Home Screen Shortcuts")
+
+![All Apps](./screenshots/all_apps.png?raw=true "All Apps")
+
 
 ## Setup:
 
