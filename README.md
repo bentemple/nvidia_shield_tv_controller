@@ -2,9 +2,10 @@
 This project is what I used to consildate all of my TV remotes down to just the Nvidia Shield TV Remote. I have an `Nvidia Shield TV Pro (2019)` connected to my LG tv via HDMI 1, a `Playstation 4` on HDMI 2, and a `Nintendo Switch` on HDMI 3. With this application (3 applications) installed on my tv, I can select each application `Nvidia Shield TV Pro`, `Playstation 4`, or `Nintendo Switch` and it will automatically switch to the associated input for the given device. I then can press on the netflix button to return to the shield at any time. The netflix button works like normal while the Nvidia Shield is the selected input.
 
 ## Use:
-Once setup, will create icons to whatever inputs you'd like to control on your tv (or app icons to perform any action and run anything. Should be relatively easily extensible.
+Once setup, this will create app icons on the Nvidia Shield to control whatever inputs you'd like on your tv. You could also use this to create app icons to perform any action and run anything really. Should be easily extensible and ultra an simple light weight application with the support of intercepting key press events from controllers.
+This is intentional to ensure that the security and validity of the accessibility service is easy to follow and doesn't habor anything malicious. From here on out I will assume you are on an Nvidia Shield TV. Other android tv setup steps may vary slightly.
 
-Currently setup so that pressing the `netflix` button when the shield input isn't selected, will select the shield input.
+Currently it is setup so that pressing the `netflix` button when the shield input isn't selected, will select the shield input.
 When the Nvidia Shield input is selected pressing the `netflix` button will perform the normal action (default launches netflix).
 
 If for some reason you become stuck and pressing the netflix button doesn't take you back (e.g. internal state got messed up) just press and hold on the `netflix` button for 2 seconds or more and then release and it will take you back to the Nvidia Shield input.
