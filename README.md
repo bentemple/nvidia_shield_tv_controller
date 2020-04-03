@@ -25,17 +25,17 @@ Configuration:
 
 1. Turn on LG IP Control mode: 
 
-    To enable IP Control Mode, turn on the LG tv.
+    To enable IP Control Mode, turn on the LG TV.
     Hold down on the settings button (gear icon) on your remote for over 5 seconds. In the top left-hand corner the channel information should appear.
     Quickly press the key combination 828[OK] on the remote. (if this doesn't work try 82888[OK], I read that somewhere, no idea if it works. Just 828 worked for me.)
     A dialog should appear titled IP CONTROL SETUP
     Set the Network IP Control option to `ON`
-    Below this you will see the TV ip address. You can use this for step 2.
+    Below this you will see the TV IP address. You can use this for step 2.
 
 2. Set config values:
 
     Edit the `app/build.gradle` configuration values to match your specific inputs. the Nvidia Shield is the main controller, so it contains the accessibility service and must be included. All others are optional.
-    If you have an LG tv, primarily this just means entering the correct input values to match the given input for each device. 
+    If you have an LG TV, primarily this just means entering the correct input values to match the given input for each device. 
 
     Options are:
         
@@ -43,7 +43,7 @@ Configuration:
     [dtv / atv / cadtv / catv / avav1 / component1 / hdmi1 / hdmi2 / hdmi3]
     ```
 
-    You'll also want to enter the ip address of your lg tv. This should probably be set to static on your router to prevent it from changing.
+    You'll also want to enter the IP address of your LG TV. This should probably be set to a static value on your router to prevent it from changing.
 
 3. Enable developer mode on the Nvidia Shield TV:
 
@@ -62,9 +62,9 @@ Configuration:
  
 4. Download and Install Android Studio 
 
-5. Run the AndroidTVController project for each *Debug* variant to install
+5. Run the `NvidiaShieldTVController` project for each *Debug* variant to install
 
-    Open the AndroidTVController project with android studio
+    Open the`NvidiaShieldTVController` project with android studio
     At some point when Android Studio loads it hopefully will detect the Nvidia Shield TV. When an option to enable debugging appears, allow your computer.
     Once the project loads, select the variants you want on the tv and run each one:
     
@@ -99,7 +99,7 @@ Configuration:
 Note:
     One of the reasons I made and am open sourcing this project is because I generally distrust any application with accessibility privilages enabled. So this allows any individual to run this setup but to also audit the code. The accessibility service code can be found in {NvidiaShieldTVController/app/src/shield/java/com/ashbreeze/shield_tv_controller/NavButtonService.kt}.
     This project also allows me to have slightly more intelligent controls between the inputs than a normal shortcut remapper would allow. Also I ensured that the remote functions entirely normally with this enabled. The netflix button even works like normal when on the shield. 
-    When I first added the remapping accessibility service it changed how the regular controls worked in strange ways. This from what I could tell has 0 affect, but it's also why I chose to remap just the netflix button. The other buttons were harder to try to replicate their functionality (e.g. home button)
+    When I first added the remapping accessibility service it changed how the regular controls worked in strange ways. It took some experimentation to find the combination of flags that would allow everything to function normally.  This from what I could tell has 0 affect, but it's also why I chose to remap just the netflix button. The other buttons were harder to try to replicate their functionality (e.g. home button)
     Originally I tried to do multiple buttons but realized getting their functionality to match perfectly wasn't straight forward. launching netflix however, was straight forward :)
 
 Another thing to mention about secruity:
@@ -127,3 +127,20 @@ Other input options:
 
 Feel free to reach out to me if you have any questions, I haven't really productionized this as I don't feel confident with these steps that it's really a truly consumer friendly experience, but I believe something along these lines would be the future if all the tv companies could get their shit together and decide on a network protocoal for all the tvs and devices to communicate. If that were to happen this device could do this without any of these shenanigans.
 
+## Credit:
+
+I loosely referenced several projects when making this, so always nice to see the breadcrumbs.
+
+For the accessibility service I used this:
+
+https://github.com/shuhaowu/NavButtonRemap
+
+The primary issue I encountered with this was one of the lines in the service_config.xml
+
+`android:accessibilityFeedbackType="feedbackGeneric"`
+
+With this flag enabled, whenever I would do special actions like try to move an app icon (Long press -> move), it would display a visual on-screen display of some sort with visible controls but it also just wouldn't function correctly with the remote. Materially the icons wouldn't move with the arrow keys like normal. Once I removed this that issue went away.
+
+
+For the telnet service, I found this as a starting point:
+https://github.com/hkdsun/Android-Telnet-Client
