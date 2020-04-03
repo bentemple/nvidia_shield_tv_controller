@@ -17,8 +17,6 @@ Banner, I did it somewhat arbitrarily, potentially 2x what android calls for but
 
 Square icon:
 
-`store` : `512 px` (unused)
-
 `xxxhdpi` : `192 px`
 
 `xxhdpi` : `144 px`
