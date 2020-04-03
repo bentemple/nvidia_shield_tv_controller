@@ -8,14 +8,14 @@
     <application
         android:theme="@style/AppTheme"
         android:allowBackup="true"
-        android:label="@string/${appPrefix}_app_name"
+        android:label="${launcherName}"
         android:icon="@drawable/${appPrefix}_ic_launcher"
         android:supportsRtl="true">
         <activity
             android:name=".MainActivity"
             android:banner="@drawable/${appPrefix}_ic_banner"
             android:icon="@drawable/${appPrefix}_ic_launcher"
-            android:label="@string/${appPrefix}_app_name"
+            android:label="${launcherName}"
             android:logo="@drawable/${appPrefix}_ic_banner"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity">

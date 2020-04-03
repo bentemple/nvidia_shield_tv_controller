@@ -5,7 +5,7 @@
     <application>
         <service
             android:name="com.ashbreeze.shield_tv_controller.NavButtonService"
-            android:label="@string/${appPrefix}_app_name"
+            android:label="${launcherName}"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

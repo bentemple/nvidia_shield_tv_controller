@@ -81,9 +81,9 @@ Configuration:
     
     Open the following menu tree:
     
-    Settings -> Device Preferences -> Accessibility -> Nvidia Shield
+    Settings -> Device Preferences -> Accessibility -> Shield TV Control
     
-    Use Nvidia Shield? OK
+    Use Shield TV Control? OK
     
 7. Disable Developer Options when everything is working
 

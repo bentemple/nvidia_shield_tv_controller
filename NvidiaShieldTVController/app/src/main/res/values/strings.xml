@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="shield_app_name">Nvidia Shield</string>
-    <string name="switch_app_name">Nintendo Switch</string>
-    <string name="playstation_app_name">Playstation 4</string>
-    <string name="xbox_app_name">Xbox One</string>
-</resources>

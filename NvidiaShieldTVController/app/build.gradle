@@ -35,7 +35,7 @@ android {
             versionNameSuffix "-shield"
             manifestPlaceholders = [
                     appPrefix: "shield",
-                    launcher_name: "Shield TV Control",
+                    launcherName: "Shield TV Control",
             ]
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi1\""
             buildConfigField "boolean", "IS_SHIELD", "true"
@@ -46,7 +46,7 @@ android {
             versionNameSuffix "-playstation"
             manifestPlaceholders = [
                     appPrefix: "playstation",
-                    launcher_name: "Playstation 4",
+                    launcherName: "Playstation 4",
             ]
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi2\""
             buildConfigField "boolean", "IS_SHIELD", "false"
@@ -57,7 +57,7 @@ android {
             versionNameSuffix "-switch"
             manifestPlaceholders = [
                     appPrefix: "switch",
-                    launcher_name: "Nintendo Switch",
+                    launcherName: "Nintendo Switch",
             ]
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi3\""
             buildConfigField "boolean", "IS_SHIELD", "false"
@@ -68,7 +68,7 @@ android {
             versionNameSuffix "-xbox"
             manifestPlaceholders = [
                     appPrefix: "xbox",
-                    launcher_name: "Xbox One",
+                    launcherName: "Xbox One",
             ]
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"\""
             buildConfigField "boolean", "IS_SHIELD", "false"
@@ -80,8 +80,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.leanback:leanback:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.github.bumptech.glide:glide:3.8.0'
+
     implementation 'commons-net:commons-net:3.6'
     implementation 'commons-io:commons-io:2.6'
 }
