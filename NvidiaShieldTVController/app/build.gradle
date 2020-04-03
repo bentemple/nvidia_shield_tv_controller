@@ -1,0 +1,87 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        applicationId "com.ashbreeze.shield_tv_controller"
+        minSdkVersion 28
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "TV_IP_ADDRESS", "\"192.168.1.20\""
+        buildConfigField "int", "TV_PORT", "9761"
+        // whether to log keypresses to logcat for mapping new controller buttons
+        buildConfigField "boolean", "LOG_INPUT_KEYCODES", "false"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    flavorDimensions "application_selection"
+    productFlavors {
+        // main also contains the accessibility service for using the netflix button
+        // to return to the shield.
+        shield {
+            dimension "application_selection"
+            applicationIdSuffix ".shield"
+            versionNameSuffix "-shield"
+            manifestPlaceholders = [
+                    appPrefix: "shield",
+                    launcher_name: "Shield TV Control",
+            ]
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi1\""
+            buildConfigField "boolean", "IS_SHIELD", "true"
+        }
+        playstation {
+            dimension "application_selection"
+            applicationIdSuffix ".playstation"
+            versionNameSuffix "-playstation"
+            manifestPlaceholders = [
+                    appPrefix: "playstation",
+                    launcher_name: "Playstation 4",
+            ]
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi2\""
+            buildConfigField "boolean", "IS_SHIELD", "false"
+        }
+        nintendo_switch {
+            dimension "application_selection"
+            applicationIdSuffix ".switch"
+            versionNameSuffix "-switch"
+            manifestPlaceholders = [
+                    appPrefix: "switch",
+                    launcher_name: "Nintendo Switch",
+            ]
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi3\""
+            buildConfigField "boolean", "IS_SHIELD", "false"
+        }
+        xbox {
+            dimension "application_selection"
+            applicationIdSuffix ".xbox"
+            versionNameSuffix "-xbox"
+            manifestPlaceholders = [
+                    appPrefix: "xbox",
+                    launcher_name: "Xbox One",
+            ]
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"\""
+            buildConfigField "boolean", "IS_SHIELD", "false"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.leanback:leanback:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'commons-net:commons-net:3.6'
+    implementation 'commons-io:commons-io:2.6'
+}

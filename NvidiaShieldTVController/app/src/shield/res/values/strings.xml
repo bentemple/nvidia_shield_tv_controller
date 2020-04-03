@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_description">Remap specific controller buttons to change inputs.</string>
+</resources>

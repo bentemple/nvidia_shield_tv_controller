@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ashbreeze.shield_tv_controller">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:theme="@style/AppTheme"
+        android:allowBackup="true"
+        android:label="@string/${appPrefix}_app_name"
+        android:icon="@mipmap/${appPrefix}_ic_launcher"
+        android:supportsRtl="true">
+        <activity
+            android:name=".MainActivity"
+            android:banner="@mipmap/${appPrefix}_ic_banner"
+            android:icon="@mipmap/${appPrefix}_ic_launcher"
+            android:label="@string/${appPrefix}_app_name"
+            android:logo="@mipmap/${appPrefix}_ic_banner"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.ashbreeze.shield_tv_controller.CurrentStateBroadcastReceiver"
+            android:exported="true">
+        </receiver>
+    </application>
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+</manifest>
