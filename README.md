@@ -9,6 +9,9 @@ When the Nvidia Shield input is selected pressing the `netflix` button will perf
 
 If for some reason you become stuck and pressing the netflix button doesn't take you back (e.g. internal state got messed up) just press and hold on the `netflix` button for 2 seconds or more and then release and it will take you back to the Nvidia Shield input.
 
+## Screenshots:
+
+
 ## Setup:
 
 Configuration:
@@ -74,6 +77,17 @@ Configuration:
     Settings -> Device Preferences -> Accessibility -> Nvidia Shield
     
     Use Nvidia Shield? OK
+    
+7. Disable Developer Options when everything is working
+
+    You don't need to leave developer options enabled once you have everything working. To disable them once you have everything working and tested, follow these steps:
+    
+    Open the following menu tree:
+
+    Settings -> Device Preferences -> Developer options (at the bottom)
+    
+    Turn off the Developer Options setting. Leave the developer options menu and they should no longer be visible at the bottom of the menu. You should be permanently good to go.
+
 
 Note:
     One of the reasons I made and am open sourcing this project is because I generally distrust any application with accessibility privilages enabled. So this allows any individual to run this setup but to also audit the code. The accessibility service code can be found in {NvidiaShieldTVController/app/src/shield/java/com/ashbreeze/shield_tv_controller/NavButtonService.kt}.
