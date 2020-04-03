@@ -3,7 +3,9 @@ This project is what I used to consildate all of my TV remotes down to just the 
 
 ## Use:
 Once setup, this will create app icons on the Nvidia Shield to control whatever inputs you'd like on your tv. You could also use this to create app icons to perform any action and run anything really. Should be easily extensible and ultra an simple light weight application with the support of intercepting key press events from controllers.
-This is intentional to ensure that the security and validity of the accessibility service is easy to follow and doesn't habor anything malicious. From here on out I will assume you are on an Nvidia Shield TV. Other android tv setup steps may vary slightly.
+This simplicity is intentional to ensure that the security and validity of the accessibility service is easy to follow and doesn't habor anything malicious. (I'm generally paranoid about any app that requests accessibility permissions since they grant such broad control of a device)
+
+From here on out I will assume you are on an Nvidia Shield TV. Other android tv setup steps may vary slightly but likely will work as well.
 
 Currently it is setup so that pressing the `netflix` button when the shield input isn't selected, will select the shield input.
 When the Nvidia Shield input is selected pressing the `netflix` button will perform the normal action (default launches netflix).
