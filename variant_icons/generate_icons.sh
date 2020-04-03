@@ -6,6 +6,6 @@ if [[ "$1" == "-c" ]];then
 fi
 
 for i in `gfind . -name "*.png" -o -name "*.webp" |grep -E "\/.*\/.*\/.*\/*.\/"`;do 
-    output=$(echo $i |awk -F "/" '{print "output/"$5"/"$2"_"$6}';)
+    output=$(echo $i |awk -F "/" '{print "../NvidiaShieldTVController/app/src/main/res/"$5"/"$2"_"$6}';)
     cp $i $output
 done
