@@ -1,7 +1,6 @@
-package com.ashbreeze.androidtvcontroller
+package com.ashbreeze.shield_tv_controller
 
 import android.content.Context
-import kotlin.system.exitProcess
 
 /**
  * @author ben.temple@gmail.com (Benjamin Temple) 2020.04.01
