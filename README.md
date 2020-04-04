@@ -127,6 +127,11 @@ Other input options:
 
 Feel free to reach out to me if you have any questions, I haven't really productionized this as I don't feel confident with these steps that it's really a truly consumer friendly experience, but I believe something along these lines would be the future if all the tv companies could get their shit together and decide on a network protocoal for all the tvs and devices to communicate. If that were to happen this device could do this without any of these shenanigans.
 
+## Support:
+
+Obviously I don't offer any guarantees of any kind around this project, but I'm very happy to help as much as possible. If you encounter a problem, or would like help setting this up with something other than an LG tv (e.g. onkyo receiver or Samsung TV) feel free to reach out to open a new issue on github and I'd be happy to work with you to get this setup and working for whatever devices you have at home.
+
+
 ## Credit:
 
 I loosely referenced several projects when making this, so always nice to see the breadcrumbs.
