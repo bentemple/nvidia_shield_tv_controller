@@ -27,7 +27,7 @@ Configuration:
 
     To enable IP Control Mode, turn on the LG TV.
     Hold down on the settings button (gear icon) on your remote for over 5 seconds. In the top left-hand corner the channel information should appear.
-    Quickly press the key combination 828[OK] on the remote. (if this doesn't work try 82888[OK], I read that [here](https://github.com/WesSouza/lgtv-ip-control#setting-up-the-tv). Just 828 worked for me.)
+    Quickly press the key combination 828[OK] on the remote. If that doesn't work, try navigating to "Network" or "Connections" and pressing 82888. I read that [here](https://github.com/WesSouza/lgtv-ip-control#setting-up-the-tv)
     A dialog should appear titled IP CONTROL SETUP
     Set the Network IP Control option to `ON`
     Below this you will see the TV IP address. You can use this for step 2.
@@ -40,7 +40,7 @@ Configuration:
     Options are:
         
     ```
-    [dtv / atv / cadtv / catv / avav1 / component1 / hdmi1 / hdmi2 / hdmi3]
+    [dtv / atv / cadtv / catv / avav1 / component1 / hdmi1 / hdmi2 / hdmi3 / hdmi4]
     ```
 
     You'll also want to enter the IP address of your LG TV. This should probably be set to a static value on your router to prevent it from changing.
@@ -121,7 +121,7 @@ INPUT_SELECT hdmi1
 Other input options:
 
 ```
-[dtv / atv / cadtv / catv / avav1 / component1 / hdmi1 / hdmi2 / hdmi3]
+[dtv / atv / cadtv / catv / avav1 / component1 / hdmi1 / hdmi2 / hdmi3 / hdmi4]
 ```
 
 
