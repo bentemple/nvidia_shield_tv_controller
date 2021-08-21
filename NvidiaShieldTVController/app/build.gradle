@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "TV_IP_ADDRESS", "\"192.168.1.20\""
+        buildConfigField "String", "TV_IP_ADDRESS", "\"192.168.1.156\""
         buildConfigField "int", "TV_PORT", "9761"
         // whether to log keypresses to logcat for mapping new controller buttons
         buildConfigField "boolean", "LOG_INPUT_KEYCODES", "false"
@@ -40,13 +40,13 @@ android {
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi1\""
             buildConfigField "boolean", "IS_SHIELD", "true"
         }
-        playstation {
+        speaker {
             dimension "application_selection"
-            applicationIdSuffix ".playstation"
-            versionNameSuffix "-playstation"
+            applicationIdSuffix ".speaker"
+            versionNameSuffix "-speaker"
             manifestPlaceholders = [
-                    appPrefix: "playstation",
-                    launcherName: "Playstation 4",
+                    appPrefix: "speaker",
+                    launcherName: "Speaker",
             ]
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi2\""
             buildConfigField "boolean", "IS_SHIELD", "false"
@@ -62,6 +62,39 @@ android {
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi3\""
             buildConfigField "boolean", "IS_SHIELD", "false"
         }
+        pc {
+            dimension "application_selection"
+            applicationIdSuffix ".pc"
+            versionNameSuffix "-pc"
+            manifestPlaceholders = [
+                    appPrefix: "pc",
+                    launcherName: "PC",
+            ]
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi3\""
+            buildConfigField "boolean", "IS_SHIELD", "false"
+        }
+        playstation {
+            dimension "application_selection"
+            applicationIdSuffix ".playstation"
+            versionNameSuffix "-playstation"
+            manifestPlaceholders = [
+                    appPrefix: "playstation",
+                    launcherName: "Playstation 4",
+            ]
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi4\""
+            buildConfigField "boolean", "IS_SHIELD", "false"
+        }
+        ps5 {
+            dimension "application_selection"
+            applicationIdSuffix ".ps5"
+            versionNameSuffix "-ps5"
+            manifestPlaceholders = [
+                    appPrefix: "ps5",
+                    launcherName: "Playstation 5",
+            ]
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi4\""
+            buildConfigField "boolean", "IS_SHIELD", "false"
+        }
         xbox {
             dimension "application_selection"
             applicationIdSuffix ".xbox"
@@ -70,7 +103,18 @@ android {
                     appPrefix: "xbox",
                     launcherName: "Xbox One",
             ]
-            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"\""
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi4\""
+            buildConfigField "boolean", "IS_SHIELD", "false"
+        }
+        game {
+            dimension "application_selection"
+            applicationIdSuffix ".game"
+            versionNameSuffix "-game"
+            manifestPlaceholders = [
+                    appPrefix: "game",
+                    launcherName: "Game Console",
+            ]
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi4\""
             buildConfigField "boolean", "IS_SHIELD", "false"
         }
     }
