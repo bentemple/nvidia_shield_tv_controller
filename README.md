@@ -2,7 +2,7 @@
 This project is what I used to consildate all of my TV remotes down to just the Nvidia Shield TV Remote. I have an `Nvidia Shield TV Pro (2019)` connected to my LG TV via HDMI 1, a `Playstation 4` on HDMI 2, and a `Nintendo Switch` on HDMI 3. With this application (3 applications) installed on my tv, I can select each application `Nvidia Shield TV Pro`, `Playstation 4`, or `Nintendo Switch` and it will automatically switch to the associated input for the given device. I then can press on the Netflix button to return to the shield at any time. The Netflix button works like normal, while the Nvidia Shield is the selected input.
 
 ## Use:
-Once set up, this will create app icons on the Nvidia Shield to control whatever inputs you'd like on your tv. You could also use this to create app icons to perform any action and run anything. It should be easily extensible and ultra and simple lightweight application with the support of intercepting key press events from controllers.
+Once set up, this will create app icons on the Nvidia Shield to control whatever inputs you'd like on your TV. You could also use this to create app icons to perform any action and run anything. It should be easily extensible and ultra and simple lightweight application with the support of intercepting key press events from controllers.
 This simplicity is intentional to ensure that the security and validity of the accessibility service is easy to follow and doesn't harbor anything malicious. (I'm generally paranoid about any app that requests accessibility permissions, since they grant such broad control of a device)
 
 From here on out, I will assume you are on an Nvidia Shield TV. Other Android TV setup steps may vary slightly, but likely will work as well.
