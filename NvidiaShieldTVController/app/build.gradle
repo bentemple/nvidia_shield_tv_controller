@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "TV_IP_ADDRESS", "\"192.168.1.156\""
+        buildConfigField "String", "TV_IP_ADDRESS", "\"192.168.1.20\""
         buildConfigField "int", "TV_PORT", "9761"
         // whether to log keypresses to logcat for mapping new controller buttons
         buildConfigField "boolean", "LOG_INPUT_KEYCODES", "false"
