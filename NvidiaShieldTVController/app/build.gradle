@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "TV_IP_ADDRESS", "\"192.168.1.20\""
+        buildConfigField "String", "TV_IP_ADDRESS", "\"192.168.3.20\""
         buildConfigField "int", "TV_PORT", "9761"
         // whether to log keypresses to logcat for mapping new controller buttons
         buildConfigField "boolean", "LOG_INPUT_KEYCODES", "false"
@@ -93,7 +93,7 @@ android {
                     appPrefix: "playstation",
                     launcherName: "Playstation 4",
             ]
-            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi4\""
+            buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi2\""
             buildConfigField "boolean", "IS_SHIELD", "false"
         }
         ps5 {
