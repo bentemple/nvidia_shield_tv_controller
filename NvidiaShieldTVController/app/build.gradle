@@ -1,6 +1,27 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+
+// Whether to use home assistant.
+//
+// If true, sends an event "nvidia_shield_tv_request" with the data json payload:
+// {"command": "${HA_COMMAND}"}
+//
+// HA_COMMAND is defined below per product variant.
+
+def readHomeAssistantToken() {
+    if (!project.properties['USE_HOME_ASSISTANT']) {
+        return ""
+    }
+
+    try {
+        lines = new File("$project.rootDir/home_assistant.token").readLines()
+        return lines[0]
+    } catch (FileNotFoundException ignored) {
+        println("*** Missing home_assistant.token file ****")
+    }
+}
+
 android {
     defaultConfig {
         applicationId "com.ashbreeze.shield_tv_controller"
@@ -11,10 +32,21 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "TV_IP_ADDRESS", "\"192.168.3.20\""
-        buildConfigField "int", "TV_PORT", "9761"
         // whether to log keypresses to logcat for mapping new controller buttons
         buildConfigField "boolean", "LOG_INPUT_KEYCODES", "false"
+
+
+        buildConfigField "boolean", "USE_HOME_ASSISTANT", "${project.properties['USE_HOME_ASSISTANT']}"
+        buildConfigField "String", "HA_IP_ADDRESS", "\"${project.properties['HA_IP_ADDRESS']}\""
+        buildConfigField "int", "HA_PORT", "${project.properties['HA_PORT']}"
+        buildConfigField "String", "HA_TOKEN", "\"${readHomeAssistantToken()}\""
+
+
+        // If not using Home Assistant, will use this IP / Port and directly send telnet command to select
+        // the given input.
+        buildConfigField "String", "TV_IP_ADDRESS", "\"${project.properties['TV_DIRECT_ACCESS_ADDRESS']}\""
+        buildConfigField "int", "TV_PORT", "${project.properties['TV_DIRECT_ACCESS_PORT']}"
+        buildConfigField "boolean", "IS_SHIELD", "false"
     }
 
     buildFeatures {
@@ -49,6 +81,7 @@ android {
                     appPrefix: "shield",
                     launcherName: "Shield TV Control",
             ]
+            buildConfigField "String", "HA_COMMAND", "\"shield\""
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi1\""
             buildConfigField "boolean", "IS_SHIELD", "true"
         }
@@ -60,8 +93,8 @@ android {
                     appPrefix: "speaker",
                     launcherName: "Speaker",
             ]
+            buildConfigField "String", "HA_COMMAND", "\"speaker\""
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi2\""
-            buildConfigField "boolean", "IS_SHIELD", "false"
         }
         nintendo_switch {
             dimension "application_selection"
@@ -71,8 +104,8 @@ android {
                     appPrefix: "switch",
                     launcherName: "Nintendo Switch",
             ]
+            buildConfigField "String", "HA_COMMAND", "\"switch\""
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi3\""
-            buildConfigField "boolean", "IS_SHIELD", "false"
         }
         pc {
             dimension "application_selection"
@@ -82,8 +115,8 @@ android {
                     appPrefix: "pc",
                     launcherName: "PC",
             ]
+            buildConfigField "String", "HA_COMMAND", "\"pc\""
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi3\""
-            buildConfigField "boolean", "IS_SHIELD", "false"
         }
         playstation {
             dimension "application_selection"
@@ -93,8 +126,8 @@ android {
                     appPrefix: "playstation",
                     launcherName: "Playstation 4",
             ]
+            buildConfigField "String", "HA_COMMAND", "\"ps4\""
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi2\""
-            buildConfigField "boolean", "IS_SHIELD", "false"
         }
         ps5 {
             dimension "application_selection"
@@ -104,8 +137,8 @@ android {
                     appPrefix: "ps5",
                     launcherName: "Playstation 5",
             ]
+            buildConfigField "String", "HA_COMMAND", "\"ps5\""
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi4\""
-            buildConfigField "boolean", "IS_SHIELD", "false"
         }
         xbox {
             dimension "application_selection"
@@ -115,8 +148,8 @@ android {
                     appPrefix: "xbox",
                     launcherName: "Xbox One",
             ]
+            buildConfigField "String", "HA_COMMAND", "\"xbox-one\""
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi4\""
-            buildConfigField "boolean", "IS_SHIELD", "false"
         }
         game {
             dimension "application_selection"
@@ -126,8 +159,8 @@ android {
                     appPrefix: "game",
                     launcherName: "Game Console",
             ]
+            buildConfigField "String", "HA_COMMAND", "\"game-console\""
             buildConfigField "String", "SELECT_INPUT_PARAMS", "\"hdmi4\""
-            buildConfigField "boolean", "IS_SHIELD", "false"
         }
     }
     namespace 'com.ashbreeze.shield_tv_controller'
