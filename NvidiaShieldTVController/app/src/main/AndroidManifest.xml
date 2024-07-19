@@ -26,6 +26,7 @@
             android:logo="@drawable/${appPrefix}_ic_banner"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity"
+            android:excludeFromRecents="true"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
