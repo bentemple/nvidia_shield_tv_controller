@@ -29,7 +29,8 @@ import kotlinx.serialization.Serializable
  */
 
 val client = HttpClient(Android) {
-    install(Logging)
+    // Uncomment to enable logging of network requests
+    //install(Logging)
     install(ContentNegotiation) {
         json()
     }
