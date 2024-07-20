@@ -8,12 +8,11 @@ There are 2 discreet ways to integrate this app with your TV
 1. Home Assistant automation driven by an event to control your TV (or anything)
 2. Directly sending Telnet input change command to older LG TVs.
 
-The app maintains an internal state of the current input.
+By default the `Netflix` button will operate entirely normally and launch the Netflix app. (or whatever app you define in the `NvidiaShieldTVController/app/gradle.properties` file.
 
-By default the `Netflix` button will issue the command to switch the input back to the  `Nvidia Shield `
-Once on the shield input, the `Netflix` button should continue to operate normally.
+Once the input has been changed, the app maintains an internal state of the current input, and pushing the `Netflix` button will issue the command to switch the input back to the `Nvidia Shield`.
 
-If at any time you long-press the `Netflix` button for >2 seconds , it will again send the command to return to the Nvidia Shield TV input.
+If at any time you long-press the `Netflix` button for >2 seconds , it will again send the command to return to the Nvidia Shield TV input. This allows for recovery should the internal state not be in-sync with the state of the TV.
 
 ## Setup:
 
