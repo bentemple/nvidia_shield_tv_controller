@@ -83,7 +83,7 @@ NOTE: You may need to lookup guides on how to get ADB working. As of right now I
 
 
 Note:
-    One of the reasons I made and am open sourcing this project is because I generally distrust any application with accessibility privileges enabled. So this allows any individual to run this setup, but to also audit the code. The accessibility service code can be found in {NvidiaShieldTVController/app/src/shield/java/com/ashbreeze/shield_tv_controller/NavButtonService.kt}.
+    One of the reasons I made and am open sourcing this project is because I generally distrust any application with accessibility privileges enabled. So this allows any individual to run this setup, but to also audit the code. The accessibility service code can be found in `NvidiaShieldTVController/app/src/shield/java/com/ashbreeze/shield_tv_controller/NavButtonService.kt`.
     This project also allows me to have slightly more intelligent controls between the inputs than a normal shortcut remapper would allow. Also, I ensured that the remote functions entirely normally with this enabled. The Netflix button even works like normal when on the shield. 
     When I first added the remapping accessibility service, it changed how the regular controls worked in strange ways. It took some experimentation to find the combination of flags that would allow everything to function normally.  This from what I could tell has 0 affect, but it's also why I chose to remap just the Netflix button. The other buttons were harder to try to replicate their functionality (e.g. home button)
     Originally, I tried to do multiple buttons, but realized getting their functionality to match perfectly wasn't straight forward. launching Netflix however, was straight forward :)
