@@ -84,7 +84,7 @@ class NavButtonService : AccessibilityService() {
     fun handleDefaultKeyIntent(keyCode: Int) {
         when (keyCode) {
             NETFLIX_KEYCODE -> {
-                applicationContext.packageManager.getLaunchIntentForPackage("com.netflix.ninja")?.let {
+                applicationContext.packageManager.getLaunchIntentForPackage(BuildConfig.NETFLIX_BUTTON_APP_URI)?.let {
                     applicationContext.startActivity(it)
                 }
             }

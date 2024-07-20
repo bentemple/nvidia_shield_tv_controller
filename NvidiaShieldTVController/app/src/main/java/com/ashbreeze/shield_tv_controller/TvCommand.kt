@@ -1,6 +1,7 @@
 package com.ashbreeze.shield_tv_controller
 
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.ashbreeze.shield_tv_controller.MainActivity.Companion.SEND_TIMEOUT
 import java.io.BufferedReader
@@ -24,7 +25,7 @@ enum class TvCommand(private val commandValue: String) {
     fun send(params: String? = null, onComplete: ((Boolean) -> Unit)) {
         val TAG = this::class.java.simpleName
 
-        val timeoutHandler = Handler()
+        val timeoutHandler = Handler(Looper.getMainLooper())
 
         val executor = Executors.newSingleThreadExecutor()
         val onCompleteInternal: (Boolean) -> Unit = { success ->

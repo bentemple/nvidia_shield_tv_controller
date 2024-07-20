@@ -13,4 +13,4 @@
 /captures
 .externalNativeBuild
 .cxx
-home_assistant.token
+**/home_assistant_token

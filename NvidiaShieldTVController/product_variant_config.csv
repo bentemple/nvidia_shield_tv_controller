@@ -1,0 +1,9 @@
+#AppID / HA command,App Name,Telnet Input Command
+shield,Shield TV Control,hdmi1
+speaker,Speaker,hdmi2
+nintendo_switch,Nintendo Switch,hdmi3
+pc,PC,hdmi3
+ps4,Playstation 4,hdmi2
+ps5,Playstation 5,hdmi4
+xboxone,Xbox One,hdmi4
+gameconsole,Game Console,hdmi4
