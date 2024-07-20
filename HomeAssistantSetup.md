@@ -1,32 +1,13 @@
-# Setup Guide, Direct Telnet Connection to older LG TVs:
-
-## Preparing the TV:
-
-1. Turn on LG IP Control Mode: 
-
-    To enable IP Control Mode, turn on the LG TV.
-    Hold down on the settings button (gear icon) on your remote for over 5 seconds. In the top left-hand corner, the channel information should appear.
-    Quickly press the key combination 828[OK] on the remote. If that doesn't work, try navigating to "Network" or "Connections" and pressing 82888. I read that [here](https://github.com/WesSouza/lgtv-ip-control#setting-up-the-tv).
-    A dialog should appear titled IP CONTROL SETUP
-    Set the Network IP Control option to `ON`
-    Below this, you will see the TV IP address. You can use this for step 2.
+# Setup Guide, Home Assistant:
 
 
-2. Set TV Input Values:
+## Preparing The Shield and Apps:
 
-    Edit the `NvidiaShieldTVController/product_variant_config.csv` configuration values to match your specific inputs. The Nvidia Shield is the main controller, so it contains the accessibility service and must be included. All others are optional.
-    If you have an LG TV, primarily this just means entering the correct input values to match the given input for each device. 
+1. Set config values
+   Set the  `NvidiaShieldTVController/app/gradle.properties` file to reflect the correct URL for your HomeAssistant instance. Do *not* include a trailing `/`, and set the boolean `USE_HOME_ASSISTANT` to true.
 
-    Options are:
-        
-    ```
-    [dtv / atv / cadtv / catv / avav1 / component1 / hdmi1 / hdmi2 / hdmi3 / hdmi4]
-    ```
-
-3. Set config values
-   Set the  `NvidiaShieldTVController/app/gradle.properties` file to reflect the correct IP address for your TV, and set the boolean `USE_HOME_ASSISTANT` to false.
-    
-    The IP address of your LG TV should be set to a static value on your router to prevent it from changing.
+2. Create a token in Home Assistant for your user, and save it to a new file in the top level of the Android project: `NvidiaShieldTVController/home_assistant_token`
+   More details on how to obtain a token can be found [here](https://developers.home-assistant.io/docs/auth_api/#long-lived-access-token)
 
 4. Enable developer mode on the Nvidia Shield TVk
 
@@ -81,30 +62,70 @@ NOTE: You may need to lookup guides on how to get ADB working. As of right now I
     
     Turn off the Developer Options setting. Leave the developer options menu, and they should no longer be visible at the bottom of the menu. You should be permanently good to go.
 
+## Home Assistant Setup
 
 Note:
-    One of the reasons I made and am open sourcing this project is because I generally distrust any application with accessibility privileges enabled. So this allows any individual to run this setup, but to also audit the code. The accessibility service code can be found in {NvidiaShieldTVController/app/src/shield/java/com/ashbreeze/shield_tv_controller/NavButtonService.kt}.
-    This project also allows me to have slightly more intelligent controls between the inputs than a normal shortcut remapper would allow. Also, I ensured that the remote functions entirely normally with this enabled. The Netflix button even works like normal when on the shield. 
-    When I first added the remapping accessibility service, it changed how the regular controls worked in strange ways. It took some experimentation to find the combination of flags that would allow everything to function normally.  This from what I could tell has 0 affect, but it's also why I chose to remap just the Netflix button. The other buttons were harder to try to replicate their functionality (e.g. home button)
-    Originally, I tried to do multiple buttons, but realized getting their functionality to match perfectly wasn't straight forward. launching Netflix however, was straight forward :)
+This assumes you already have the TV or device you wish to control already integrated with Home Assistant. In the example of the LG TV, that I use, it was as easy as adding the LG WebOS TV integration and following the setup steps.
 
-## Notes / Debugging
-You should be able to telnet into the TV and change inputs manually
-If you've enabled the IP Control Mode, you should be able to do some simple debugging to test things before getting everything else going. Just telnet into the TV:
-```
-telnet ${TV_IP_ADDRESS} 9761
-```
-Then run the following command to select hdmi1
-```
-INPUT_SELECT hdmi1
-```
-`NG` means failure, `OK` means success
+1. Create a new automation to subscribe to the "nvidia_shield_tv_request" event type.
+ 
+2. For each trigger value, hook up the relevant action to be performed. i.e. Change the TV's input.
 
-Other input options:
+Here is an example of my automation configuration yaml file:
+```yaml
 
+alias: Nvidia Shield Input Source Controller
+description: ""
+trigger:
+  - platform: event
+    event_type: nvidia_shield_tv_request
+    event_data: {}
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: >-
+              {{ trigger.event.data.command == "SELECT_TV_INPUT" and
+              trigger.event.data.value == "ps4"}}
+        sequence:
+          - service: media_player.select_source
+            target:
+              device_id: 82320ac14909b682c69011be87520f89
+            data:
+              source: Playstation 4
+      - conditions:
+          - condition: template
+            value_template: >-
+              {{ trigger.event.data.command == "SELECT_TV_INPUT" and
+              trigger.event.data.value == "shield"}}
+        sequence:
+          - service: media_player.select_source
+            target:
+              device_id: 82320ac14909b682c69011be87520f89
+            data:
+              source: Nvidia Shield
+      - conditions:
+          - condition: template
+            value_template: >-
+              {{ trigger.event.data.command == "SELECT_TV_INPUT" and
+              trigger.event.data.value == "nintendo_switch"}}
+        sequence:
+          - service: media_player.select_source
+            target:
+              device_id: 82320ac14909b682c69011be87520f89
+            data:
+              source: Nintendo Switch
+mode: single
 ```
-[dtv / atv / cadtv / catv / avav1 / component1 / hdmi1 / hdmi2 / hdmi3 / hdmi4]
-```
+
+
+### Additional Debugging
+
+You can use the Developer tools to help debug the event prior to setting up the automation.
+Under Developer Tools → Events → Listen to events, you can subscribe to the "nvidia_shield_tv_request" and when running the Android app, you should see events being fired.
+If this is not the case, likely you should pursue some further debugging on the Android app side with logcat.
+
 
 
 Feel free to reach out to me if you have any questions, I haven't really productionized this as I don't feel confident with these steps that it's really a truly consumer-friendly experience, but I believe something along these lines would be the future if all the TV companies could get their shit together and decide on a network protocol for all the TVs and devices to communicate. If that were to happen, this device could do this without any of these shenanigans.
