@@ -25,11 +25,26 @@ class MainActivity : Activity() {
 
         VariantSpecificCode.run(this)
 
-        TvCommand.SELECT_INPUT.send(BuildConfig.SELECT_INPUT_PARAMS) { success ->
-            if (success) {
-                CurrentStateBroadcastReceiver.setShieldActiveInput(this, BuildConfig.IS_SHIELD)
+        if (BuildConfig.USE_HOME_ASSISTANT) {
+            HaCommand.SELECT_TV_INPUT.send(BuildConfig.HA_COMMAND) { success ->
+                if (success) {
+                    CurrentStateBroadcastReceiver.setShieldActiveInput(
+                        this,
+                        BuildConfig.IS_SHIELD_PRODUCT_VARIANT
+                    )
+                }
+                exitProcess(0)
             }
-            exitProcess(0)
+        } else {
+            TvCommand.SELECT_INPUT.send(BuildConfig.SELECT_INPUT_PARAMS) { success ->
+                if (success) {
+                    CurrentStateBroadcastReceiver.setShieldActiveInput(
+                        this,
+                        BuildConfig.IS_SHIELD_PRODUCT_VARIANT
+                    )
+                }
+                exitProcess(0)
+            }
         }
     }
 
