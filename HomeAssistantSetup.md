@@ -2,26 +2,29 @@
 
 ## Setup Overview:
 1. Update the config file `NvidiaShieldTVController/app/gradle.properties` with the correct base url to your Home Assistant instance.
-2. Create a long lived token in Home Assistant and save it to: `NvidiaShieldTVController/home_assistant_token`
-3. Enable developer options on the `Nvidia Shield` and enable network debugging.
-4. Install Android Studio
-5. Connect ADB to the `Nvidia Shield` via Network Debugging.
-6. Build and install the build variants you want to use. Note: You _must_ include the Shield app as it contains the accessibility service for returning to the `Nvidia Shield`
-7. Enable the `Shield TV Control` app accessibility service: Settings → Device Preferences → Accessibility → Shield TV Control
-8. Create a new Home Assistant automation to subscribe to the `nvidia_shield_tv_request` event type and perform the desired actions. You can use the *Choose* action and filter conditionally with the *Value Template*: `{{ trigger.event.data.command == "SELECT_TV_INPUT" and trigger.event.data.value == "shield"}}`
+2. *IFF your Home Assistant instance is not using https://*, Update the xml config file `NvidiaShieldTVController/app/src/main/res/xml/network_security_config.xml` with the correct domain or IP of your Home Assistant instance.
+3. Create a long lived token in Home Assistant and save it to: `NvidiaShieldTVController/home_assistant_token`
+4. Enable developer options on the `Nvidia Shield` and enable network debugging.
+5. Install Android Studio
+6. Connect ADB to the `Nvidia Shield` via Network Debugging.
+7. Build and install the build variants you want to use. Note: You _must_ include the Shield app as it contains the accessibility service for returning to the `Nvidia Shield`
+8. Enable the `Shield TV Control` app accessibility service: Settings → Device Preferences → Accessibility → Shield TV Control
+9. Create a new Home Assistant automation to subscribe to the `nvidia_shield_tv_request` event type and perform the desired actions. You can use the *Choose* action and filter conditionally with the *Value Template*: `{{ trigger.event.data.command == "SELECT_TV_INPUT" and trigger.event.data.value == "shield"}}`
 The default `event.data.value` is the name of the build variant. i.e. one of:
 `shield, speaker, nintendo_switch, pc, ps4, ps5, xboxone, gameconsole`
-9. Disable developer options once everything is setup and working.
+10. Disable developer options once everything is setup and working.
 
 ## Preparing The Shield and Apps:
 
 1. Set config values
    Set the  `NvidiaShieldTVController/app/gradle.properties` file to reflect the correct URL for your HomeAssistant instance. Do *not* include a trailing `/`, and set the boolean `USE_HOME_ASSISTANT` to true.
 
-2. Create a token in Home Assistant for your user, and save it to a new file in the top level of the Android project: `NvidiaShieldTVController/home_assistant_token`
+2. *IFF your Home Assistant instance is not using https://*, Update the xml config file `NvidiaShieldTVController/app/src/main/res/xml/network_security_config.xml` with the correct domain or IP of your Home Assistant instance.
+
+3. Create a token in Home Assistant for your user, and save it to a new file in the top level of the Android project: `NvidiaShieldTVController/home_assistant_token`
    More details on how to obtain a token can be found [here](https://developers.home-assistant.io/docs/auth_api/#long-lived-access-token)
 
-3. Enable developer mode on the Nvidia Shield TVk
+4. Enable developer mode on the Nvidia Shield TVk
 
     Open the following menu tree:
     Settings → Device Preferences → About → Build
@@ -36,12 +39,12 @@ The default `event.data.value` is the name of the build variant. i.e. one of:
     
     Once enabled, the IP address should appear as an option.
  
-4. Download and Install Android Studio 
+5. Download and Install Android Studio 
 
-5. From a terminal, connect to the NVIDIA shield with the network debugging IP Address and adb. `adb connect shield_ip:port`
+6. From a terminal, connect to the NVIDIA shield with the network debugging IP Address and adb. `adb connect shield_ip:port`
 NOTE: You may need to lookup guides on how to get ADB working. As of right now I don't have a config setup for the app, so the IP port is hard-coded into the app. Pull requests are welcome to make configuring the app easier by writing to a config file which would enable me to create pre-built APKs, vastly simplifying this process. I just haven't gotten around to it yet.
 
-6. Run the `NvidiaShieldTVController` project for each *Debug* variant to install
+7. Run the `NvidiaShieldTVController` project for each *Debug* variant to install
 
     Open the `NvidiaShieldTVController` project with android studio
     At some point, when Android Studio loads, it hopefully will detect the Nvidia Shield TV. When an option to enable debugging appears, allow your computer.
@@ -54,7 +57,7 @@ NOTE: You may need to lookup guides on how to get ADB working. As of right now I
     Run that. When complete, it should flash on your TV.
     If a different input will be selected for a given variant, when you run it from Android Studio, the TV input should also change.
 
-7. Enable Accessibility service:
+8. Enable Accessibility service:
 
     You must enable the accessibility service associated with the Shield variant app for the Netflix button to work and bring you back to the shield when on another input. See `Use` section at the top of the file for more details (Default name: "Nvidia Shield")
     
@@ -64,7 +67,7 @@ NOTE: You may need to lookup guides on how to get ADB working. As of right now I
     
     Use Shield TV Control? OK
     
-8. Disable Developer Options when everything is working
+9. Disable Developer Options when everything is working
 
     You don't need to leave developer options enabled once you have everything working. To disable them once you have everything working and tested, follow these steps:
     
