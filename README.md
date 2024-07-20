@@ -35,6 +35,10 @@ I don't offer any guarantees of any kind around this project, but I'm very happy
 
 ## Credit:
 
+Thanks to [@tangowithfoxtrot](https://github.com/tangowithfoxtrot) for adding additional apps / icons, and some spell checking.
+
+Thanks to [@sorryusernameisalreadytaken](https://github.com/sorryusernameisalreadytaken) for pointing out that Home Assistant integrates with LG and giving me the idea to add Home Assistant support as that makes this project much more universal.
+
 I loosely referenced several projects when making this, so always nice to see the breadcrumbs.
 
 For the accessibility service, I used this:
