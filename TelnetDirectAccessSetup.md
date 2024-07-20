@@ -1,6 +1,19 @@
 # Setup Guide, Direct Telnet Connection to older LG TVs:
 
-## Preparing the TV:
+## Setup Overview:
+1. Turn on LG IP Control mode.
+2. Update `NvidiaShieldTVController/product_variant_config.csv` to reflect the correct input labels to match your setup.
+```
+[dtv / atv / cadtv / catv / avav1 / component1 / hdmi1 / hdmi2 / hdmi3 / hdmi4]
+```
+3. Disable the `USE_HOME_ASSISTANT` option and Set the *TV's static IP address* in `NvidiaShieldTVController/app/gradle.properties`
+4. Enable developer options on the `Nvidia Shield`
+5. Connect ADB to the `Nvidia Shield`
+6. Build and install the apps you setup in the `product_variant_config.csv` file. Note: You _must_ include the Shield app as it contains the accessibility service for returning to the `Nvidia Shield`
+7. Enable the `Shield TV Control` app accessibility service: Settings → Device Preferences → Accessibility → Shield TV Control
+8. Disable accessibility services once everything is setup.
+
+## Detailed Setup Steps:
 
 1. Turn on LG IP Control Mode: 
 
