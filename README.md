@@ -36,7 +36,7 @@ I don't offer any guarantees of any kind around this project, but I'm very happy
 
 Thanks to [@tangowithfoxtrot](https://github.com/tangowithfoxtrot) for adding additional apps / icons, and some spell checking.
 
-Thanks to [@sorryusernameisalreadytaken](https://github.com/sorryusernameisalreadytaken) for pointing out that Home Assistant integrates with LG and giving me the idea to add Home Assistant support as that makes this project much more universal.
+Thanks to [@sorryusernameisalreadytaken](https://github.com/sorryusernameisalreadytaken) for pointing out that Home Assistant integrates with LG and giving me the idea to add Home Assistant support as that makes this project much more universal. I originally set this up before I had my Home Assistant instance setup, so hadn't thought to go that route.
 
 I loosely referenced several projects when making this, so always nice to see the breadcrumbs.
 
