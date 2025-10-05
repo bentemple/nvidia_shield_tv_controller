@@ -21,7 +21,7 @@ class CurrentStateBroadcastReceiver: BroadcastReceiver() {
     }
 
     companion object {
-        private val TAG = CurrentStateBroadcastReceiver::class.java.simpleName
+        private val TAG = CurrentStateBroadcastReceiver::class.java.canonicalName
         const val HDMI_SELECTED_BROADCAST = "com.ashbreeze.shield_tv_controller.HDMI_SELECTED_BROADCAST"
         const val IS_SHIELD_ACTIVE_INPUT_KEY = "IS_SHIELD_ACTIVE_INPUT_KEY"
 

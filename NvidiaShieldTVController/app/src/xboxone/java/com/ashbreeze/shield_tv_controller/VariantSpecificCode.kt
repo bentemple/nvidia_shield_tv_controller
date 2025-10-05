@@ -8,6 +8,6 @@ import android.content.Context
 
 object VariantSpecificCode : VariantSpecificControl {
     override fun run(context: Context) {
-        // Stub
+        // Stub - MainActivity handles all routing logic
     }
 }

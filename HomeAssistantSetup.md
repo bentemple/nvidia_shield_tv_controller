@@ -1,81 +1,43 @@
 # Setup Guide, Home Assistant:
 
 ## Setup Overview:
-1. Update the config file `NvidiaShieldTVController/app/gradle.properties` with the correct base url to your Home Assistant instance.
-2. *IFF your Home Assistant instance is not using https://*, Update the xml config file `NvidiaShieldTVController/app/src/main/res/xml/network_security_config.xml` with the correct domain or IP of your Home Assistant instance.
-3. Create a long lived token in Home Assistant and save it to: `NvidiaShieldTVController/home_assistant_token`
-4. Enable developer options on the `Nvidia Shield` and enable network debugging.
-5. Install Android Studio
-6. Connect ADB to the `Nvidia Shield` via Network Debugging.
-7. Build and install the build variants you want to use. Note: You _must_ include the Shield app as it contains the accessibility service for returning to the `Nvidia Shield`
-8. Enable the `Shield TV Control` app accessibility service: Settings → Device Preferences → Accessibility → Shield TV Control
-9. Create a new Home Assistant automation to subscribe to the `nvidia_shield_tv_request` event type and perform the desired actions. You can use the *Choose* action and filter conditionally with the *Value Template*: `{{ trigger.event.data.command == "SELECT_TV_INPUT" and trigger.event.data.value == "shield"}}`
+1. Install the app variants you want to use (see installation options below). **IMPORTANT: You MUST install the Shield variant** as it is the main app which houses the accessibility service and configuration for all variants.
+2. Enable the `Shield TV Control` app accessibility service and configure it: Settings → Device Preferences → Accessibility → Shield TV Control → Configuration
+3. In the Configuration screen, enter your Home Assistant base URL, long-lived access token, and the package name for the app you want to return to when pressing the Netflix button (e.g., `com.netflix.ninja`)
+4. Create a new Home Assistant automation to subscribe to the `nvidia_shield_tv_request` event type and perform the desired actions. You can use the *Choose* action and filter conditionally with the *Value Template*: `{{ trigger.event.data.command == "SELECT_TV_INPUT" and trigger.event.data.value == "shield"}}`
 The default `event.data.value` is the name of the build variant. i.e. one of:
 `shield, speaker, nintendo_switch, pc, ps4, ps5, xboxone, gameconsole`
-10. Disable developer options once everything is setup and working.
 
-## Preparing The Shield and Apps:
+**Note:** Configuration is now done dynamically through the Shield TV Control accessibility settings menu (Device Preferences → Accessibility → Shield TV Control → Configuration). You no longer need to modify gradle.properties or create token files!
 
-1. Set config values
-   Set the  `NvidiaShieldTVController/app/gradle.properties` file to reflect the correct URL for your HomeAssistant instance. Do *not* include a trailing `/`, and set the boolean `USE_HOME_ASSISTANT` to true.
+## Installation Options:
 
-2. *IFF your Home Assistant instance is not using https://*, Update the xml config file `NvidiaShieldTVController/app/src/main/res/xml/network_security_config.xml` with the correct domain or IP of your Home Assistant instance.
+### Option 1: Download and Install APKs via Browser
+1. Download the pre-built APKs for the variants you want to use (**Shield variant is required**)
+2. On your Nvidia Shield, use a browser to download the APK files
+3. Install each APK by opening the downloaded files
+4. You may need to enable "Unknown sources" in Settings → Security & restrictions
 
-3. Create a token in Home Assistant for your user, and save it to a new file in the top level of the Android project: `NvidiaShieldTVController/home_assistant_token`
-   More details on how to obtain a token can be found [here](https://developers.home-assistant.io/docs/auth_api/#long-lived-access-token)
+### Option 2: Sideload via ADB
+1. Enable developer options on the Nvidia Shield:
+   - Settings → Device Preferences → About → Build (click 8 times)
+   - Settings → Device Preferences → Developer options → Enable Network debugging
+2. Connect to the Shield via ADB: `adb connect <shield_ip>:<port>`
+3. Install the APKs (**Shield variant is required**): `adb install path/to/shield-variant.apk`
+4. Install additional variants as needed: `adb install path/to/other-variant.apk`
+5. Optionally disable developer options when complete
 
-4. Enable developer mode on the Nvidia Shield TVk
+## Configuration
 
-    Open the following menu tree:
-    Settings → Device Preferences → About → Build
-    Click on `Build` 8 times consecutively. 
-    Developer mode should be enabled
+1. Enable the `Shield TV Control` app accessibility service and configure it: Settings → Device Preferences → Accessibility → Shield TV Control → Configuration
 
-    Open the following menu tree:
-    
-    Settings → Device Preferences → Developer options (at the bottom)
-    
-    Enable the `Network debugging` option.
-    
-    Once enabled, the IP address should appear as an option.
- 
-5. Download and Install Android Studio 
+![Finding Accessibility Menu](./screenshots/configuration-1-menu-finding-accessibility.jpg?raw=true "Finding Accessibility Menu")
+![Finding App in Accessibility Menu](./screenshots/configuration-2-menu-finding-app.jpg?raw=true "Finding App Accessibility in Accessibility Menu")
+![Shield Accessibility Options](./screenshots/configuration-3-menu-accessibility-options.jpg?raw=true "Shield Accessibility Options")
 
-6. From a terminal, connect to the NVIDIA shield with the network debugging IP Address and adb. `adb connect shield_ip:port`
-NOTE: You may need to lookup guides on how to get ADB working. As of right now I don't have a config setup for the app, so the IP port is hard-coded into the app. Pull requests are welcome to make configuring the app easier by writing to a config file which would enable me to create pre-built APKs, vastly simplifying this process. I just haven't gotten around to it yet.
+3. In the Configuration screen, enter your Home Assistant base URL, long-lived access token, and the package name for the app you want to return to when pressing the Netflix button (e.g., `com.netflix.ninja`) You'll likely want to set this to `org.jellyfin.androidtv`
 
-7. Run the `NvidiaShieldTVController` project for each *Debug* variant to install
-
-    Open the `NvidiaShieldTVController` project with android studio
-    At some point, when Android Studio loads, it hopefully will detect the Nvidia Shield TV. When an option to enable debugging appears, allow your computer.
-    Once the project loads, select the variants you want on the TV and run each one:
-    
-    In the bottom left corner of the Android Studio window is a build variants drawer.
-    Select this and using the drop-down you can pick each variant. Likely you'll want to run the Debug variant.
-    Release variant requires a signing config file, which you'd have to create. It's something for distributing versions of the app.
-    Then, at the top of Android Studio, there should be a green run button.
-    Run that. When complete, it should flash on your TV.
-    If a different input will be selected for a given variant, when you run it from Android Studio, the TV input should also change.
-
-8. Enable Accessibility service:
-
-    You must enable the accessibility service associated with the Shield variant app for the Netflix button to work and bring you back to the shield when on another input. See `Use` section at the top of the file for more details (Default name: "Nvidia Shield")
-    
-    Open the following menu tree:
-    
-    Settings → Device Preferences → Accessibility → Shield TV Control
-    
-    Use Shield TV Control? OK
-    
-9. Disable Developer Options when everything is working
-
-    You don't need to leave developer options enabled once you have everything working. To disable them once you have everything working and tested, follow these steps:
-    
-    Open the following menu tree:
-
-    Settings → Device Preferences → Developer options (at the bottom)
-    
-    Turn off the Developer Options setting. Leave the developer options menu, and they should no longer be visible at the bottom of the menu. You should be permanently good to go.
+![Configuration Screen](./screenshots/configuration-4-configuration-screen.jpg?raw=true "Configuration Screen")
 
 ## Home Assistant Setup
 

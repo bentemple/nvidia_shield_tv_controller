@@ -9,10 +9,11 @@ import android.view.accessibility.AccessibilityEvent
 
 import android.content.Intent
 import android.content.Context
+import androidx.core.content.ContextCompat
 import java.lang.IllegalArgumentException
 
 class NavButtonService : AccessibilityService() {
-    private val TAG = this.javaClass.simpleName
+    private val TAG = this.javaClass.canonicalName
 
     private val keyEventDownTimeMap = mutableMapOf<Int, Long?>()
 
@@ -21,8 +22,12 @@ class NavButtonService : AccessibilityService() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "onCreate")
-        applicationContext.registerReceiver(broadcastReceiver,
-            IntentFilter(CurrentStateBroadcastReceiver.HDMI_SELECTED_BROADCAST))
+        ContextCompat.registerReceiver(
+            applicationContext,
+            broadcastReceiver,
+            IntentFilter(CurrentStateBroadcastReceiver.HDMI_SELECTED_BROADCAST),
+            ContextCompat.RECEIVER_EXPORTED
+        )
     }
 
     override fun onDestroy() {
@@ -68,12 +73,10 @@ class NavButtonService : AccessibilityService() {
 
         return if (!broadcastReceiver.isShieldActiveInput || duration >= LONG_PRESS_DURATION) {
             Log.d(TAG, "intercepting broadcast.")
-            if (BuildConfig.SELECT_INPUT_PARAMS.isNotEmpty()) {
-                TvCommand.SELECT_INPUT.send(BuildConfig.SELECT_INPUT_PARAMS) {
-                    broadcastReceiver.isShieldActiveInput = true
-                }
-                applicationContext.startHome()
+            HaCommand.SELECT_TV_INPUT.send(applicationContext, BuildConfig.HA_COMMAND) {
+                broadcastReceiver.isShieldActiveInput = true
             }
+            applicationContext.startHome()
             true
         } else {
             handleDefaultKeyIntent(keyCode)
@@ -84,7 +87,8 @@ class NavButtonService : AccessibilityService() {
     fun handleDefaultKeyIntent(keyCode: Int) {
         when (keyCode) {
             NETFLIX_KEYCODE -> {
-                applicationContext.packageManager.getLaunchIntentForPackage(BuildConfig.NETFLIX_BUTTON_APP_URI)?.let {
+                Log.d(this::class.java.canonicalName, "Launching activity override defined for netflix button");
+                applicationContext.packageManager.getLaunchIntentForPackage(ConfigurationManager.getNetflixButtonTargetPackage(applicationContext))?.let {
                     applicationContext.startActivity(it)
                 }
             }
@@ -108,6 +112,7 @@ class NavButtonService : AccessibilityService() {
 }
 
 private fun Context.startHome() {
+    Log.d(this::class.java.canonicalName, "Returning to home home");
     val homeIntent = Intent(Intent.ACTION_MAIN).apply {
         this.addCategory(Intent.CATEGORY_HOME)
         this.flags = Intent.FLAG_ACTIVITY_NEW_TASK

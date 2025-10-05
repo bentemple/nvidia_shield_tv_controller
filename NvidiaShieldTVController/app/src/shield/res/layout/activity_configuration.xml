@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:maxWidth="600dp">
+
+        <!-- Home Assistant URL -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ha_url_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/config_text_primary"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editHaUrl"
+            style="@style/ConfigEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ha_url_hint"
+            android:inputType="textUri"
+            android:layout_marginBottom="12dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusDown="@+id/editHaToken" />
+
+        <!-- Home Assistant Token -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ha_token_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/config_text_primary"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editHaToken"
+            style="@style/ConfigEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ha_token_hint"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusUp="@+id/editHaUrl"
+            android:nextFocusDown="@+id/editNetflixPackage" />
+
+        <!-- Netflix Button Package -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/netflix_package_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/config_text_primary"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editNetflixPackage"
+            style="@style/ConfigEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/netflix_package_hint"
+            android:inputType="text"
+            android:layout_marginBottom="12dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusUp="@+id/editHaToken"
+            android:nextFocusDown="@+id/btnSave" />
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnSave"
+                style="@style/ConfigButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save_button"
+                android:layout_marginEnd="24dp"
+                android:minWidth="140dp"
+                android:focusable="true"
+                android:nextFocusUp="@+id/editNetflixPackage"
+                android:nextFocusRight="@+id/btnCancel" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                style="@style/ConfigButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_button"
+                android:minWidth="140dp"
+                android:focusable="true"
+                android:nextFocusUp="@+id/editNetflixPackage"
+                android:nextFocusLeft="@+id/btnSave" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

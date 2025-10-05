@@ -2,29 +2,25 @@
 This project is what I used to consolidate all of my TV remotes down to just the Nvidia Shield TV Remote. I have an `Nvidia Shield TV Pro (2019)` connected to my LG TV via HDMI 1, a `Playstation 4` on HDMI 2, and a `Nintendo Switch` on HDMI 3. With this application (3 applications) installed on my tv, I can select each application `Nvidia Shield TV Pro`, `Playstation 4`, or `Nintendo Switch` and it will automatically switch to the associated input for the given device. I then can press on the Netflix button to return to the shield at any time. The Netflix button works like normal, while the Nvidia Shield is the selected input.
 
 ## Use:
-Once setup, this will create discrete app icons on the Nvidia Shield to either deliver events to your Home Assistant instance to change your TV's input, or directly deliver input change commands to your LG TV.
+Once setup, this will create discrete app icons on the Nvidia Shield that deliver events to your Home Assistant instance to change your TV's input.
 
-There are 2 ways to integrate this app with your TV
-1. Home Assistant automation driven by an event to control your TV (**Recommended**)
-2. Directly sending Telnet input change command to older LG TVs.
-
-By default the `Netflix` button will operate entirely normally and launch the Netflix app. (or whatever app you define in the `NvidiaShieldTVController/app/gradle.properties` file.
+By default the `Netflix` button will operate entirely normally and launch the Netflix app (or whatever app you define in the Configuration settings).
 
 Once the input has been changed, the app maintains an internal state of the current input, and pushing the `Netflix` button will issue the command to switch the input back to the `Nvidia Shield`.
 
-If at any time you long-press the `Netflix` button for >2 seconds , it will again send the command to return to the Nvidia Shield TV input. This allows for recovery should the internal state not be in-sync with the state of the TV.
+If at any time you long-press the `Netflix` button for >2 seconds, it will again send the command to return to the Nvidia Shield TV input. This allows for recovery should the internal state not be in-sync with the state of the TV.
 
 ## Setup:
 
 To setup with Home Assistant, please follow the [HomeAssistantSetup.md](./HomeAssistantSetup.md) guide
 
-To setup to directly control your LG TV via telnet (older LG TVs only) follow the [TelnetDirectAccessSetup.md](./TelnetDirectAccessSetup.md) guide
+**Note:** Configuration is now done dynamically through the Shield TV Control accessibility settings menu (Device Preferences → Accessibility → Shield TV Control → Configuration). No need to edit gradle.properties or create token files!
 
 ## Screenshots:
 
-![Home Screen Shortcuts](./screenshots/home_screen_shortcuts.webp?raw=true "Home Screen Shortcuts")
+![Home Screen Shortcuts](./screenshots/home-screen-shortcuts.jpg?raw=true "Home Screen Shortcuts")
 
-![All Apps](./screenshots/all_apps.webp?raw=true "All Apps")
+![All Apps](./screenshots/all-apps.jpg?raw=true "All Apps")
 
 
 ## Support:
@@ -49,7 +45,3 @@ The primary issue I encountered with this was one of the lines in the service_co
 `android:accessibilityFeedbackType="feedbackGeneric"`
 
 With this flag enabled, whenever I would do special actions like try to move an app icon (Long press → move), it would display a visual on-screen display of some sort with visible controls, but it also just wouldn't function correctly with the remote. Materially, the icons wouldn't move with the arrow keys like normal. Once I removed this, that issue went away.
-
-
-For the telnet service, I found this as a starting point:
-https://github.com/hkdsun/Android-Telnet-Client

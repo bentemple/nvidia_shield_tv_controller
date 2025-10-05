@@ -2,10 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
+        <activity
+            android:name="com.ashbreeze.shield_tv_controller.ConfigurationActivity"
+            android:label="@string/configuration_title"
+            android:exported="true"
+            android:theme="@style/ConfigurationTheme"
+            android:windowSoftInputMode="adjustPan" />
+
         <service
             android:name="com.ashbreeze.shield_tv_controller.NavButtonService"
             android:label="${launcherName}"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>

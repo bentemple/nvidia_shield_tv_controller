@@ -15,7 +15,9 @@
 package com.ashbreeze.shield_tv_controller
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import kotlin.system.exitProcess
 
 class MainActivity : Activity() {
@@ -23,32 +25,39 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        VariantSpecificCode.run(this)
+        // All variants now send HA command directly using shared configuration
+        if (BuildConfig.IS_SHIELD_PRODUCT_VARIANT) {
+            // Shield variant: run variant-specific code (Netflix button service, etc.)
+            VariantSpecificCode.run(this)
+        }
 
-        if (BuildConfig.USE_HOME_ASSISTANT) {
-            HaCommand.SELECT_TV_INPUT.send(BuildConfig.HA_COMMAND) { success ->
-                if (success) {
-                    CurrentStateBroadcastReceiver.setShieldActiveInput(
-                        this,
-                        BuildConfig.IS_SHIELD_PRODUCT_VARIANT
-                    )
-                }
-                exitProcess(0)
+        // Send Home Assistant command for this variant
+        sendHomeAssistantCommand(BuildConfig.HA_COMMAND)
+    }
+
+    /**
+     * Sends the Home Assistant command and handles the response
+     */
+    private fun sendHomeAssistantCommand(command: String) {
+        HaCommand.SELECT_TV_INPUT.send(this, command) { success ->
+            if (success) {
+                Log.d(TAG, "Sent $command successfully")
+            } else {
+                Log.e(TAG, "Failed to send $command")
             }
-        } else {
-            TvCommand.SELECT_INPUT.send(BuildConfig.SELECT_INPUT_PARAMS) { success ->
-                if (success) {
-                    CurrentStateBroadcastReceiver.setShieldActiveInput(
-                        this,
-                        BuildConfig.IS_SHIELD_PRODUCT_VARIANT
-                    )
-                }
-                exitProcess(0)
+            if (success) {
+                CurrentStateBroadcastReceiver.setShieldActiveInput(
+                    this,
+                    BuildConfig.IS_SHIELD_PRODUCT_VARIANT
+                )
             }
+            finish()
+            exitProcess(0)
         }
     }
 
     companion object {
+        private const val TAG = "MainActivity"
         const val SEND_TIMEOUT: Long = 2000
     }
 }

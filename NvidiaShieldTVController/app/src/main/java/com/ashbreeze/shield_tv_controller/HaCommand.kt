@@ -1,79 +1,76 @@
 package com.ashbreeze.shield_tv_controller
 
+import android.content.Context
 import android.util.Log
 import com.ashbreeze.shield_tv_controller.MainActivity.Companion.SEND_TIMEOUT
-
-import io.ktor.client.*
-import io.ktor.client.engine.android.Android
-import io.ktor.client.plugins.HttpRequestRetry
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.request.headers
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
-import io.ktor.client.request.url
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
-import io.ktor.http.headers
-import io.ktor.http.isSuccess
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import kotlinx.serialization.Serializable
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * @author ben.temple@epicgames.com (Benjamin Temple) 2024.07.19
  */
 
-val client = HttpClient(Android) {
-    // Uncomment to enable logging of network requests
-    //install(Logging)
-    install(ContentNegotiation) {
-        json()
-    }
-    install(HttpRequestRetry) {
-        retryOnServerErrors(maxRetries = 5)
-        constantDelay(200)
-    }
-}
-
-@Serializable
-data class CommandRequest(
-    val command: String,
-    val value: String,
-)
-
 enum class HaCommand {
     SELECT_TV_INPUT;
 
-    fun send(eventValue: String, onComplete: ((Boolean) -> Unit)) {
-        val TAG = this::class.java.simpleName
+    fun send(context: Context, eventValue: String, onComplete: ((Boolean) -> Unit)) {
+        val TAG = this::class.java.canonicalName
 
         val eventId = "nvidia_shield_tv_request"
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
-            withTimeout(SEND_TIMEOUT) {
-                val httpResponse: HttpResponse = client.post {
-                    url(urlString = "${BuildConfig.HA_BASE_URL}/api/events/${eventId}")
-                    contentType(ContentType.Application.Json)
-                    headers {
-                        append("Authorization", "Bearer ${BuildConfig.HA_TOKEN}")
-                    }
-                    setBody(CommandRequest(
-                        command = this@HaCommand.name,
-                        value = eventValue,
-                    ))
+            try {
+                withTimeout(SEND_TIMEOUT) {
+                    val haUrl = ConfigurationManager.getHaUrl(context)
+                    val haToken = ConfigurationManager.getHaToken(context)
 
+                    Log.d(TAG, "Sending HA Command: $eventValue, URL: $haUrl, Token: $haToken")
+
+                    val jsonBody = "{\"command\":\"${this@HaCommand.name}\",\"value\":\"${eventValue}\"}"
+                    var success = false
+
+                    // Retry logic: up to 5 attempts with 200ms delay
+                    for (attempt in 1..5) {
+                        try {
+                            val url = URL("${haUrl}/api/events/${eventId}")
+                            val connection = url.openConnection() as HttpURLConnection
+                            connection.requestMethod = "POST"
+                            connection.setRequestProperty("Content-Type", "application/json")
+                            connection.setRequestProperty("Authorization", "Bearer ${haToken}")
+                            connection.doOutput = true
+
+                            connection.outputStream.use { os ->
+                                os.write(jsonBody.toByteArray())
+                            }
+
+                            val responseCode = connection.responseCode
+                            success = responseCode in 200..299
+
+                            connection.disconnect()
+
+                            if (success) {
+                                break
+                            } else if (responseCode >= 500 && attempt < 5) {
+                                delay(200)
+                            } else {
+                                break
+                            }
+                        } catch (e: Exception) {
+                            if (attempt == 5) throw e
+                            delay(200)
+                        }
+                    }
+
+                    onComplete.invoke(success)
                 }
-                if (httpResponse.status.isSuccess()) {
-                    Log.d(TAG, "Sent ${this@HaCommand.name}:$eventValue successfully")
-                } else {
-                    Log.e(TAG, "Failed to send ${this@HaCommand.name}:$eventValue")
-                }
-                onComplete.invoke(httpResponse.status.isSuccess())
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to send HA command", e)
+                onComplete.invoke(false)
             }
         }
     }

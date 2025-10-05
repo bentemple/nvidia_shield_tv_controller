@@ -2,4 +2,18 @@
     <color name="background_gradient_start">#000000</color>
     <color name="background_gradient_end">#DDDDDD</color>
     <color name="default_background">#3d3d3d</color>
+    
+    <!-- Configuration Activity Colors - Dark Theme -->
+    <color name="config_background">#1E1E1E</color>
+    <color name="config_surface">#2D2D2D</color>
+    <color name="config_text_primary">#FFFFFF</color>
+    <color name="config_text_secondary">#CCCCCC</color>
+    <color name="config_text_hint">#888888</color>
+    <color name="config_primary">#0D7377</color>
+    <color name="config_accent">#14A085</color>
+    <color name="config_button_text">#FFFFFF</color>
+    <color name="config_button_background">#14A085</color>
+    <color name="config_edittext_background">#2D2D2D</color>
+    <color name="config_edittext_border">#555555</color>
+    <color name="config_edittext_border_focused">#14A085</color>
 </resources>

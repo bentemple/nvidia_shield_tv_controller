@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="service_description">Remap specific controller buttons to change inputs.</string>
+    <string name="configuration_title">Shield TV Controller Configuration</string>
+
+    <!-- Configuration Labels -->
+    <string name="ha_url_label">Home Assistant URL</string>
+    <string name="ha_token_label">Home Assistant Token</string>
+    <string name="netflix_package_label">Netflix Button Package</string>
+    
+    <!-- Configuration Hints -->
+    <string name="ha_url_hint">http://homeassistant.local:8123</string>
+    <string name="ha_token_hint">Enter your Home Assistant long-lived access token</string>
+    <string name="netflix_package_hint">com.netflix.ninja</string>
+    
+    <!-- Buttons -->
+    <string name="save_button">Save</string>
+    <string name="cancel_button">Cancel</string>
+    
+    <!-- Messages -->
+    <string name="save_success">Configuration saved successfully</string>
+    <string name="save_error">Error saving configuration</string>
 </resources>
