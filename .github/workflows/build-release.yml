@@ -1,0 +1,92 @@
+name: Build Release APKs
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && github.event.base_ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Extract tag name
+        id: tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.RELEASE_KEYSTORE }}" | base64 -d > release.keystore
+
+      - name: Build all release APKs
+        env:
+          RELEASE_KEYSTORE_PATH: ${{ github.workspace }}/release.keystore
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+        working-directory: NvidiaShieldTVController
+        run: ./gradlew assembleRelease
+
+      - name: Upload Shield TV APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: shield-${{ steps.tag.outputs.TAG_NAME }}.apk
+          path: NvidiaShieldTVController/app/build/outputs/apk/shield/release/app-shield-release.apk
+
+      - name: Upload Speaker APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: speaker-${{ steps.tag.outputs.TAG_NAME }}.apk
+          path: NvidiaShieldTVController/app/build/outputs/apk/speaker/release/app-speaker-release.apk
+
+      - name: Upload Nintendo Switch APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: nintendo_switch-${{ steps.tag.outputs.TAG_NAME }}.apk
+          path: NvidiaShieldTVController/app/build/outputs/apk/nintendo_switch/release/app-nintendo_switch-release.apk
+
+      - name: Upload PC APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: pc-${{ steps.tag.outputs.TAG_NAME }}.apk
+          path: NvidiaShieldTVController/app/build/outputs/apk/pc/release/app-pc-release.apk
+
+      - name: Upload PS4 APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps4-${{ steps.tag.outputs.TAG_NAME }}.apk
+          path: NvidiaShieldTVController/app/build/outputs/apk/ps4/release/app-ps4-release.apk
+
+      - name: Upload PS5 APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps5-${{ steps.tag.outputs.TAG_NAME }}.apk
+          path: NvidiaShieldTVController/app/build/outputs/apk/ps5/release/app-ps5-release.apk
+
+      - name: Upload Xbox One APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: xboxone-${{ steps.tag.outputs.TAG_NAME }}.apk
+          path: NvidiaShieldTVController/app/build/outputs/apk/xboxone/release/app-xboxone-release.apk
+
+      - name: Upload Game Console APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: gameconsole-${{ steps.tag.outputs.TAG_NAME }}.apk
+          path: NvidiaShieldTVController/app/build/outputs/apk/gameconsole/release/app-gameconsole-release.apk
+
+      - name: Clean up keystore
+        if: always()
+        run: rm -f release.keystore
