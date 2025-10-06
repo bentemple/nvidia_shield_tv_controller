@@ -14,7 +14,7 @@ If at any time you long-press the `Netflix` button for >2 seconds, it will again
 
 To setup with Home Assistant, please follow the [HomeAssistantSetup.md](./HomeAssistantSetup.md) guide
 
-**Note:** Configuration is now done dynamically through the Shield TV Control accessibility settings menu (Device Preferences → Accessibility → Shield TV Control → Configuration). No need to edit gradle.properties or create token files!
+**Configuration** is now done dynamically through the Shield TV Control accessibility settings menu (Device Preferences → Accessibility → Shield TV Control → Configuration). No need to edit gradle.properties or create token files!
 
 ## Screenshots:
 

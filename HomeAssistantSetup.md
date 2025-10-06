@@ -3,7 +3,7 @@
 ## Setup Overview:
 1. Install the app variants you want to use (see installation options below). **IMPORTANT: You MUST install the Shield variant** as it is the main app which houses the accessibility service and configuration for all variants.
 2. Enable the `Shield TV Control` app accessibility service and configure it: Settings → Device Preferences → Accessibility → Shield TV Control → Configuration
-3. In the Configuration screen, enter your Home Assistant base URL, long-lived access token, and the package name for the app you want to return to when pressing the Netflix button (e.g., `com.netflix.ninja`)
+3. In the Configuration screen, enter your Home Assistant base URL, long-lived access token, and the package name for the app you want to launch when pressing the Netflix button when already on the Nvidia Shield (e.g., `com.netflix.ninja` or `org.jellyfin.androidtv`)
 4. Create a new Home Assistant automation to subscribe to the `nvidia_shield_tv_request` event type and perform the desired actions. You can use the *Choose* action and filter conditionally with the *Value Template*: `{{ trigger.event.data.command == "SELECT_TV_INPUT" and trigger.event.data.value == "shield"}}`
 The default `event.data.value` is the name of the build variant. i.e. one of:
 `shield, speaker, nintendo_switch, pc, ps4, ps5, xboxone, gameconsole`
@@ -36,6 +36,8 @@ The default `event.data.value` is the name of the build variant. i.e. one of:
 ![Shield Accessibility Options](./screenshots/configuration-3-menu-accessibility-options.jpg?raw=true "Shield Accessibility Options")
 
 3. In the Configuration screen, enter your Home Assistant base URL, long-lived access token, and the package name for the app you want to return to when pressing the Netflix button (e.g., `com.netflix.ninja`) You'll likely want to set this to `org.jellyfin.androidtv`
+
+**Note:** The Home Assistant long-lived access tokens are very long. You cam use the Nvidia Shield Android companion app to launch the keyboard, and with the keyboard open you can actually paste from your phone, which is what I did to set the access token.
 
 ![Configuration Screen](./screenshots/configuration-4-configuration-screen.jpg?raw=true "Configuration Screen")
 
