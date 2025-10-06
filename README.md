@@ -22,6 +22,8 @@ To setup with Home Assistant, please follow the [HomeAssistantSetup.md](./HomeAs
 
 ![All Apps](./screenshots/all-apps.jpg?raw=true "All Apps")
 
+![Configuration Screen](./screenshots/configuration-4-configuration-screen.jpg?raw=true "Configuration Screen")
+
 
 ## Support:
 
