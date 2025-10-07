@@ -12,8 +12,8 @@ android {
         compileSdk = 36
         minSdk = 26
         targetSdk = 36
-        versionCode = 2
-        versionName = "1.0.2"
+        versionCode = 3
+        versionName = "1.0.3"
 
         // whether to log keypresses to logcat for mapping new controller buttons
         buildConfigField("boolean", "LOG_INPUT_KEYCODES", "false")
@@ -79,6 +79,13 @@ android {
         }
     }
     namespace = "com.ashbreeze.shield_tv_controller"
+
+    // Exclude to help ensure reproducible builds.
+    // See:  https://issuetracker.google.com/issues/268071369?pli=1
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
 }
 
 dependencies {
