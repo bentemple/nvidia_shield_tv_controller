@@ -42,50 +42,66 @@ jobs:
       - name: Upload Shield TV APK
         uses: actions/upload-artifact@v4
         with:
-          name: shield-${{ steps.tag.outputs.TAG_NAME }}.apk
+          name: app-shield-release.apk
           path: NvidiaShieldTVController/app/build/outputs/apk/shield/release/app-shield-release.apk
 
       - name: Upload Speaker APK
         uses: actions/upload-artifact@v4
         with:
-          name: speaker-${{ steps.tag.outputs.TAG_NAME }}.apk
+          name: app-speaker-release.apk
           path: NvidiaShieldTVController/app/build/outputs/apk/speaker/release/app-speaker-release.apk
 
       - name: Upload Nintendo Switch APK
         uses: actions/upload-artifact@v4
         with:
-          name: nintendo_switch-${{ steps.tag.outputs.TAG_NAME }}.apk
+          name: app-nintendo_switch-release.apk
           path: NvidiaShieldTVController/app/build/outputs/apk/nintendo_switch/release/app-nintendo_switch-release.apk
 
       - name: Upload PC APK
         uses: actions/upload-artifact@v4
         with:
-          name: pc-${{ steps.tag.outputs.TAG_NAME }}.apk
+          name: app-pc-release.apk
           path: NvidiaShieldTVController/app/build/outputs/apk/pc/release/app-pc-release.apk
 
       - name: Upload PS4 APK
         uses: actions/upload-artifact@v4
         with:
-          name: ps4-${{ steps.tag.outputs.TAG_NAME }}.apk
+          name: app-ps4-release.apk
           path: NvidiaShieldTVController/app/build/outputs/apk/ps4/release/app-ps4-release.apk
 
       - name: Upload PS5 APK
         uses: actions/upload-artifact@v4
         with:
-          name: ps5-${{ steps.tag.outputs.TAG_NAME }}.apk
+          name: app-ps5-release.apk
           path: NvidiaShieldTVController/app/build/outputs/apk/ps5/release/app-ps5-release.apk
 
       - name: Upload Xbox One APK
         uses: actions/upload-artifact@v4
         with:
-          name: xboxone-${{ steps.tag.outputs.TAG_NAME }}.apk
+          name: app-xboxone-release.apk
           path: NvidiaShieldTVController/app/build/outputs/apk/xboxone/release/app-xboxone-release.apk
 
       - name: Upload Game Console APK
         uses: actions/upload-artifact@v4
         with:
-          name: gameconsole-${{ steps.tag.outputs.TAG_NAME }}.apk
+          name: app-gameconsole-release.apk
           path: NvidiaShieldTVController/app/build/outputs/apk/gameconsole/release/app-gameconsole-release.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            NvidiaShieldTVController/app/build/outputs/apk/shield/release/app-shield-release.apk
+            NvidiaShieldTVController/app/build/outputs/apk/speaker/release/app-speaker-release.apk
+            NvidiaShieldTVController/app/build/outputs/apk/nintendo_switch/release/app-nintendo_switch-release.apk
+            NvidiaShieldTVController/app/build/outputs/apk/pc/release/app-pc-release.apk
+            NvidiaShieldTVController/app/build/outputs/apk/ps4/release/app-ps4-release.apk
+            NvidiaShieldTVController/app/build/outputs/apk/ps5/release/app-ps5-release.apk
+            NvidiaShieldTVController/app/build/outputs/apk/xboxone/release/app-xboxone-release.apk
+            NvidiaShieldTVController/app/build/outputs/apk/gameconsole/release/app-gameconsole-release.apk
+          draft: true
+          prerelease: false
+          generate_release_notes: true
 
       - name: Clean up keystore
         if: always()

@@ -13,7 +13,7 @@ android {
         minSdk = 26
         targetSdk = 36
         versionCode = 2
-        versionName = "1.0"
+        versionName = "1.0.2"
 
         // whether to log keypresses to logcat for mapping new controller buttons
         buildConfigField("boolean", "LOG_INPUT_KEYCODES", "false")
