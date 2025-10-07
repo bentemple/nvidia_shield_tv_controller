@@ -110,6 +110,4 @@ Under Developer Tools → Events → Listen to events, subscribe to the `nvidia_
 If this is not the case, likely you should pursue some further debugging on the Android app side with logcat.
 
 
-Feel free to reach out to me if you have any questions, I haven't really productionized this as I don't feel confident with these steps that it's really a truly consumer-friendly experience, but I believe something along these lines would be the future if all the TV companies could get their shit together and decide on a network protocol for all the TVs and devices to communicate. If that were to happen, this device could do this without any of these shenanigans.
-
-
+Feel free to reach out to me by opening a discussion or issue if you have any questions or problems.
